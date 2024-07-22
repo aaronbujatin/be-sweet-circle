@@ -9,12 +9,13 @@ import jakarta.persistence.criteria.Predicate;
 public class ProductSpecification {
 
     public static Specification<Product> filterProduct(String name){
-        return (root, query, criteriaBuilder) -> {
-            Predicate productNamePredicate =  criteriaBuilder
-                    .like(root.get("name"), StringUtils.isBlank(name) ? likePattern("") : name);
-            return criteriaBuilder.and(productNamePredicate);
-        };
+        return (root, query, criteriaBuilder) ->
+                criteriaBuilder.like(
+                        criteriaBuilder.lower(root.get("name")),
+                        "%" + name.toLowerCase() + "%"
+                );
     }
+
     private static String likePattern(String value) {
         return "%" + value + "%";
     }

@@ -1,8 +1,8 @@
 package com.aaronbujatin.be_sweet_circle.entity;
 
+import com.aaronbujatin.be_sweet_circle.enums.ProductMenu;
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.math.BigDecimal;
 
 @Builder
@@ -15,25 +15,15 @@ import java.math.BigDecimal;
 public class Product {
 
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "product_seq"
-    )
-    @SequenceGenerator(
-            name = "product_seq",
-            sequenceName = "tbl_product_seq",
-            allocationSize = 1
-    )
-
-//    name,
-//    menu(DONUTS, BEVERAGES),
-//    category(CLASSIC_DONUT, PREMIUM_DONUT)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
     private BigDecimal price;
     private String description;
+    private int stock;
+    @Enumerated(EnumType.STRING)
+    private ProductMenu productMenu;
     @Column(length = 100_000)
     private byte[] image;
-
 
 }
